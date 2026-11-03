@@ -11,13 +11,12 @@ class Book extends Model
     // protected $table = 'library_books';
 
     public $timestamps = false;
+
     // // mass assignment using create() or update()
     protected $fillable = [
         'title',
         'author',
         'genre',
-        'cover'
+        'cover',
     ];
-
-
 }

@@ -3,6 +3,11 @@
 @section('content')
     <h1>Book Collection</h1>
     <p>Browse and manage books in our database</p>
+
+    <a class="button" href="{{ route('books.create') }}">Add Book</a>
+    @session('success')
+        <p class='success'>{{ session('success') }}</p>
+    @endsession
     <div class="book-grid">
         @foreach ($books as $book)
             {{-- <a href="{{ route('books.show', $book) }}"> --}}

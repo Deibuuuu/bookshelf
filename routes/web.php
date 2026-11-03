@@ -20,7 +20,15 @@ Route::get('/books', [BookController::class, 'index'])
 // new/add book form
 Route::get('/books/create', [BookController::class, 'create'])
     ->name('books.create');
+// edit
+Route::get('/books/{book}/edit/', [BookController::class, 'edit'])
+    ->name('books.edit');
 
+// update book
+Route::put('/books/{book}', [BookController::class, 'update'])
+    ->name('books.update');
+
+// page for displaying a single book
 Route::get('/books/{book}', [BookController::class, 'show'])
     ->name('books.show');
 

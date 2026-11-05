@@ -3,13 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\Book;
+use App\Models\Publisher;
 use Illuminate\Http\Request;
 
 class BookController extends Controller
 {
     public function index()
     {
-        $books = Book::all();
+        $books = Book::with('publisher')->get();
 
         return view('books.index', compact('books'));
     }
@@ -21,16 +22,19 @@ class BookController extends Controller
 
     public function create()
     {
-        return view('books.create');
+        $publishers = Publisher::all();
+
+        return view('books.create', compact('publishers'));
     }
 
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'title' => ['required', 'string', 'max:150'],  // <-- Removed spaces after colons
+            'title' => ['required', 'string', 'max:150'],
             'author' => ['required', 'string', 'max:100'],
             'genre' => ['required', 'string', 'max:50'],
             'cover' => ['nullable', 'url', 'max:2048'],
+            'publisher_id' => ['nullable', 'exists:publishers,id'],
         ]);
 
         Book::create($validated);
@@ -42,7 +46,9 @@ class BookController extends Controller
 
     public function edit(Book $book)
     {
-        return view('books.edit', compact('book'));
+        $publishers = Publisher::all();
+
+        return view('books.edit', compact('book', 'publishers'));
     }
 
     public function update(Request $request, Book $book)
@@ -52,12 +58,22 @@ class BookController extends Controller
             'author' => ['required', 'string', 'max:100'],
             'genre' => ['required', 'string', 'max:50'],
             'cover' => ['nullable', 'url', 'max:2048'],
+            'publisher_id' => ['nullable', 'exists:publishers,id'],
         ]);
 
         $book->update($validated);
 
         return redirect()
-            ->route('books.index', 'book')
+            ->route('books.index')
             ->with('success', 'Book updated successfully!');
+    }
+
+    public function destroy(Book $book)
+    {
+        $book->delete();
+
+        return redirect()
+            ->route('books.index')
+            ->with('success', 'Book deleted successfully');
     }
 }

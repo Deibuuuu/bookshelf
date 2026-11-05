@@ -31,7 +31,7 @@ img {
 
 .book-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 1.5rem;
     margin-block: 1.5rem;
 }
@@ -44,7 +44,9 @@ img {
     border: 1px solid #e2e8f0;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.06);
     border-radius: 0.5rem;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
 }
 
 .card:hover {
@@ -63,10 +65,19 @@ img {
     border-radius: 0.375rem;
 }
 
-.card img,
 .card-image {
     width: 100%;
     aspect-ratio: 2 / 3;
+    object-fit: cover;
+    border-radius: 0.375rem;
+    display: block;
+    background-color: #e2e8f0;
+    transition: transform 0.2s ease;
+}
+
+.card img {
+    width: 100%;
+    aspect-ratio: 1 / 1;
     object-fit: cover;
     border-radius: 0.375rem;
     display: block;
@@ -80,7 +91,7 @@ img {
 
 .card-image-placeholder {
     width: 100%;
-    aspect-ratio: 2 / 3;
+    aspect-ratio: 1 / 1;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -132,7 +143,10 @@ img {
     text-align: center;
     text-decoration: none;
     cursor: pointer;
-    transition: background-color 0.2s ease, border-color 0.2s ease;
+    transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease;
+    margin-top: 0.5rem;
 }
 
 .button:hover {
@@ -151,6 +165,12 @@ img {
     background: #f8fafc;
     border-color: #1e40af;
     color: #1e3a8a;
+}
+
+.button-danger {
+    background: #dc2626;
+    color: #fff;
+    border-color: #dc2626;
 }
 
 .success {
@@ -190,6 +210,7 @@ img {
 }
 
 .form-panel input[type="text"],
+.form-panel select[name="publisher_id"],
 .form-panel input {
     width: 100%;
     padding: 0.5rem;
@@ -226,4 +247,7 @@ img {
     font-size: 0.85rem;
     margin-top: -0.5rem;
     margin-bottom: 0.5rem;
+}
+
+.list-selection {
 }

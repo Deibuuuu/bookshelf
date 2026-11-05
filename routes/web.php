@@ -35,3 +35,7 @@ Route::get('/books/{book}', [BookController::class, 'show'])
 // store new book
 Route::post('/books', [BookController::class, 'store'])
     ->name('books.store');
+
+// delete book 
+Route::delete('/books/{book}', [BookController::class, 'destroy'])
+    ->name('books.destroy');

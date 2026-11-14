@@ -5,12 +5,13 @@ namespace App\Http\Controllers;
 use App\Models\Book;
 use App\Models\Publisher;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class BookController extends Controller
 {
     public function index()
     {
-        $books = Book::with('publisher')->get();
+        $books = Book::with('publisher')->paginate(5);
 
         return view('books.index', compact('books'));
     }
@@ -33,10 +34,17 @@ class BookController extends Controller
             'title' => ['required', 'string', 'max:150'],
             'author' => ['required', 'string', 'max:100'],
             'genre' => ['required', 'string', 'max:50'],
-            'cover' => ['nullable', 'url', 'max:2048'],
+            'cover' => ['nullable', 'image',
+            'mimes:jpeg,png,webp', 'max:2048'],
             'publisher_id' => ['nullable', 'exists:publishers,id'],
         ]);
-
+        
+        if($request->hasFile('cover')){
+            $cover = $request->file('cover')
+                ->store('covers', 'public');
+            
+        }
+        $validated['cover'] = $cover;
         Book::create($validated);
 
         return redirect()
@@ -57,10 +65,15 @@ class BookController extends Controller
             'title' => ['required', 'string', 'max:150'],
             'author' => ['required', 'string', 'max:100'],
             'genre' => ['required', 'string', 'max:50'],
-            'cover' => ['nullable', 'url', 'max:2048'],
+            'cover' => ['nullable', 'image', 'mimes:jpeg,png,webp', 'max:2048'],
             'publisher_id' => ['nullable', 'exists:publishers,id'],
         ]);
 
+        if($request->hasFile('cover')){
+            $cover = $request->file('cover')
+                ->store('covers', 'public');
+            
+        }
         $book->update($validated);
 
         return redirect()
@@ -68,8 +81,8 @@ class BookController extends Controller
             ->with('success', 'Book updated successfully!');
     }
 
-    public function destroy(Book $book)
-    {
+    public function destroy(Book $book) {
+        Storage::disk('public')->delete($book->cover);
         $book->delete();
 
         return redirect()

@@ -14,7 +14,9 @@
                     <span class="tag">{{ $book->genre }}</span>
                     <a href="{{ route('books.show', $book) }}" class="card-image-link">
                         @if ($book->cover)
-                            <img src="{{ $book->cover }}" alt="{{ $book->title }}" class="card-image">
+                            <img src="{{ str_starts_with($book->cover, 'http') 
+                                ? $book->cover
+                                : Storage::url($book->cover) }}" alt="{{ $book->title }}" class="card-image">
                         @else
                             <div class="card-image-placeholder">No Cover Available</div>
                         @endif
@@ -36,6 +38,36 @@
                 </article>
             @endforeach
         </div>
+        @if ($books->total() > 0)
+            <p>
+                Showing {{ $books->firstItem() }} - {{ $books->lastItem() }}
+                of {{ $books->total() }} books
+            </p>
+        @endif
+        @if ($books->hasPages())
+            <nav class="pagination">
+                @if ($books->onFirstPage())
+                    <span class="pagination-disabled">
+                        Previous
+                    </span>
+                @else
+                    <a class="button" href="{{ $books->previousPageUrl() }}">
+                        Previous
+                    </a>
+                @endif
+            </nav>
+            
+        @endif
+
+        @if ($books->hasMorePages())
+            <a class="button" href="{{ $books->nextPageUrl() }}">
+                Next
+            </a>
+        @else
+            <span class="pagination-disabled">
+                Next
+            </span>
+        @endif
     @endsection
 
 

@@ -9,12 +9,44 @@ use Illuminate\Support\Facades\Storage;
 
 class BookController extends Controller
 {
-    public function index()
-    {
-        $books = Book::with('publisher')->paginate(5);
+   public function index(Request $request)
+{
+    // Genre and publisher filter
+    $genres = Book::whereNotNull('genre')->distinct()->orderBy('genre')->pluck('genre');
+    $publishers = Publisher::orderBy('name')->get();
+    
 
-        return view('books.index', compact('books'));
-    }
+    $books = Book::with('publisher')
+        // Search by title or author
+        ->when($request->filled('search'), function ($query) use ($request) {
+            $search = $request->input('search');
+            $query->where(function ($q) use ($search) {
+                $q->where('title', 'like', "%{$search}%")
+                  ->orWhere('author', 'like', "%{$search}%");
+            });
+        })
+        // Filter by genre
+        ->when($request->filled('genre'), function ($query) use ($request) {
+            $query->where('genre', $request->input('genre'));
+        })
+        // Filter by publishing house
+        ->when($request->filled('publisher_id'), function ($query) use ($request) {
+            $query->where('publisher_id', $request->input('publisher_id'));
+        })
+        // Sort options
+        ->when($request->filled('sort'), function ($query) use ($request) {
+            match ($request->input('sort')) {
+                'title_asc'  => $query->orderBy('title', 'asc'),
+                'title_desc' => $query->orderBy('title', 'desc'),
+                default      => $query->orderBy('id', 'desc'),
+            };
+        }, function ($query) {
+            $query->orderBy('id', 'desc'); 
+        })
+        ->paginate(6)
+        ->withQueryString(); 
+    return view('books.index', compact('books', 'genres', 'publishers'));
+}
 
     public function show(Book $book)
     {

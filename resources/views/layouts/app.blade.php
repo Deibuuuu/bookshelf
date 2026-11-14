@@ -8,7 +8,18 @@
 </head>
 <body>
     <header class="site-header">
-        <a href="{{ route('books.index') }}">Bookshelf</a>
+        <a href="{{ route('books.index') }}" id="logo">Bookshelf</a>
+        @guest
+            <a href="{{ route('login') }}" id="button">Login</a>
+        @endguest
+
+        @auth
+            <p>Hello, {{ auth()->user()->name }}</p>
+            <form method="POST" action="{{ route('logout') }}">
+                @csrf
+                <button>Log out</button>
+            </form>
+        @endauth
     </header>
 
     <main class="container">

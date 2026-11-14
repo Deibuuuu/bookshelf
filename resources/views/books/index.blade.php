@@ -7,19 +7,66 @@
             <a href="#book-section"><img src="{{ asset('images/icons/down-arrow.svg') }}" alt="Down Arrow" ></a>
         </section>
         
-        <section>
+        <section id="book-section">
             <nav>
                 @auth
                     <a class="button" href="{{ route('books.create') }}">Add Book</a>
                 @endauth
+
                 @session('success')
                     <p class="success">{{ session('success') }}</p>
                 @endsession  
-                
-                {{-- todo: filter and search box --}}
+                {{-- filter and search box --}}
+                    <form method="GET" action="{{ route('books.index') }}" class="filter-bar">
+                         @csrf 
+                         <div class="search-filter-group">
+                            <input
+                                type="text"
+                                name="search"
+                                value="{{ request('search') }}"
+                                placeholder="Search book or author..."
+                                class="filter-control"
+                            >
+
+                            <label for="">Book Title:</label>
+                            <select name="sort" class="filter-control">
+                                <option value="">Sort by</option>
+                                <option value="title_asc" @selected(request('sort') == 'title_asc')>A-Z</option>
+                                <option value="title_desc" @selected(request('sort') == 'title_desc')>Z-A</option>
+                            </select>
+
+                            <label>Genre:</label>
+                            <select name="genre" class="filter-control">
+                                <option value="">All Genres</option>
+                                @foreach ($genres as $genre)
+                                    <option value="{{ $genre }}" @selected(request('genre') == $genre )>
+                                        {{ $genre }}
+                                    </option>
+                                @endforeach
+                            </select>
+
+                            <label>Publishing House:</label>
+                            <select name="publisher_id" class="filter-control">
+                                <option value="">All Publishers</option>
+                                @foreach ($publishers as $publisher)
+                                    <option value="{{ $publisher->id }}" @selected(request('publisher_id') == 
+                                    $publisher->id )>
+                                        {{ $publisher->name }}
+                                    </option>
+                                @endforeach
+                            </select>
+
+                            <div>
+                                <button type="submit" class="button">Apply</button>
+                                @if (request()->hasAny(['search','sort', 'genre', 'publisher_id']))
+                                    <a href="{{ route('books.index') }}" class="button button-secondary">Reset</a>
+                                @endif
+                            </div>
+                        </div>
+                    </form>
             </nav>
 
-            <div class="book-grid" id="book-section">
+            <div class="book-grid" >
                 @foreach ($books as $book)
                     <article class="card">
                         <span class="tag">{{ $book->genre }}</span>
@@ -69,7 +116,7 @@
                         Previous
                     </a>
                 @endif
-            </nav>
+                </nav>
             
         @endif
 

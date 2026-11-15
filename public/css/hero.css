@@ -1,0 +1,45 @@
+@import url('global.css');
+
+.hero {
+    min-height: 420px;
+    height: auto;
+    text-align: center;
+    padding-bottom: 2rem;
+}
+
+.hero h1 {
+    display: none;
+}
+
+.hero p {
+    font-size: clamp(2.25rem, 5.5vw, 5rem);
+    margin-top: 1.5rem;
+    line-height: 1.15;
+}
+
+.hero span {
+    color: var(--color-accent);
+    font-family: var(--font-accent);
+    border-bottom: 0.5rem solid var(--color-accent);
+}
+
+.hero img {
+    width: clamp(150px, 10vw, 200px);
+    margin-top: 1rem;
+    margin-bottom: 5.5rem;
+    animation: float 3s ease-in-out infinite;
+
+    will-change: transform;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+}
+
+@keyframes float {
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-12px);
+    }
+}

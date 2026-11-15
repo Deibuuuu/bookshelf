@@ -16,13 +16,15 @@
 <body>
     <header class="site-header">
         <a href="{{ route('books.index') }}" id="logo">Bookshelf</a>
-        @guest
-            @if (request()->routeIs('books.index'))
-             <a href="{{ route('login') }}" id="button">Login</a>
-            @endif
-        @endguest
-
+   
         <div class="group">
+            @guest
+                @if (request()->routeIs('books.index'))
+                 <a href="{{ route('login') }}" id="button">Login</a>
+                @endif
+            @endguest
+       
+
             @auth
                 <p>Hello, {{ auth()->user()->name }}</p>
                 <form method="POST" action="{{ route('logout') }}">

@@ -1,5 +1,8 @@
 @import url('global.css');
-.form-panel {
+.form-panel,
+.login-card,
+form[action*='/Login'],
+form[action*='/login'] {
     background: #ffffff;
     border: 1.5px solid #e5dfd5;
     border-radius: 1rem;
@@ -12,7 +15,10 @@
     margin: 2.5rem auto;
 }
 
-.form-panel.login-card {
+.form-panel.login-card,
+.login-card,
+form[action*='/Login'],
+form[action*='/login'] {
     max-width: 440px;
 }
 
@@ -25,11 +31,17 @@
     letter-spacing: -0.02em;
 }
 
-.form-panel br {
+.form-panel br,
+.login-card br,
+form[action*='/Login'] br,
+form[action*='/login'] br {
     display: none;
 }
 
-.form-panel label {
+.form-panel label,
+.login-card label,
+form[action*='/Login'] label,
+form[action*='/login'] label {
     display: block;
     font-size: 0.85rem;
     font-weight: 600;
@@ -39,7 +51,10 @@
 }
 
 .form-panel input,
-.form-panel select {
+.form-panel select,
+.login-card input,
+form[action*='/Login'] input,
+form[action*='/login'] input {
     width: 100%;
     height: 2.75rem;
     padding: 0.5rem 0.875rem;
@@ -55,21 +70,28 @@
     transition: all 0.2s ease;
 }
 
-.form-panel input[type='file'] {
+.form-panel input[type='file'],
+.login-card input[type='file'] {
     height: auto;
     padding: 0.5rem;
     cursor: pointer;
 }
 
 .form-panel input:focus,
-.form-panel select:focus {
+.form-panel select:focus,
+.login-card input:focus,
+form[action*='/Login'] input:focus,
+form[action*='/login'] input:focus {
     background-color: #ffffff;
     border-color: var(--color-accent);
     box-shadow: 0 0 0 3px rgba(217, 84, 30, 0.15);
 }
 
 .form-panel button,
-.form-panel button[type='submit'] {
+.form-panel button[type='submit'],
+.login-card button,
+form[action*='/Login'] button,
+form[action*='/login'] button {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -90,7 +112,10 @@
 }
 
 .form-panel button:hover,
-.form-panel button[type='submit']:hover {
+.form-panel button[type='submit']:hover,
+.login-card button:hover,
+form[action*='/Login'] button:hover,
+form[action*='/login'] button:hover {
     background: #c04514;
     border-color: #c04514;
     color: #ffffff;
@@ -99,11 +124,17 @@
 }
 
 .form-panel button:active,
-.form-panel button[type='submit']:active {
+.form-panel button[type='submit']:active,
+.login-card button:active,
+form[action*='/Login'] button:active,
+form[action*='/login'] button:active {
     transform: translateY(0);
 }
 
-.form-panel .error {
+.form-panel .error,
+.login-card .error,
+form[action*='/Login'] .error,
+form[action*='/login'] .error {
     color: #dc2626;
     font-size: 0.85rem;
     font-weight: 500;

@@ -1,22 +1,37 @@
 @extends('layouts.app')
 @section('content')
-    <h1> Manager Login</h1>
-    <form method="POST"
-        action="{{ route('login.store') }}">
-        @csrf
-        <label>Email</label>
-        <input type="email" name="email"
-        maxlength="255"
-        required
-        value="{{ old('email') }}"><br>
-        <label>Password</label><br>
-        <input type="password" name="password"
-        maxlength="255"
-        required><br>
-        @error('password')
-            <p class="error">{{$message}}</p>
+    <div class="form-panel login-card">
+        <h1>Manager Login</h1>
+        <form method="POST" action="{{ route('login.store') }}">
+            @csrf
+            <label for="email">Email</label>
+            <input
+                type="email"
+                id="email"
+                name="email"
+                maxlength="255"
+                required
+                autocomplete="email"
+                value="{{ old('email') }}"
+            >
+            @error('email')
+                <p class="error">{{ $message }}</p>
+            @enderror
 
-        @enderror
-        <button type="submit">Login</button>
-    </form>
+            <label for="password">Password</label>
+            <input
+                type="password"
+                id="password"
+                name="password"
+                maxlength="255"
+                required
+                autocomplete="current-password"
+            >
+            @error('password')
+                <p class="error">{{ $message }}</p>
+            @enderror
+
+            <button type="submit">Login</button>
+        </form>
+    </div>
 @endsection

@@ -45,6 +45,16 @@ body {
     padding: 2rem 0;
 }
 
+.site-header p {
+    font-family: var(--font-primary);
+    line-height: 1.6;
+    font-weight: 600;
+}
+
+.group {
+    display: flex;
+    gap: 2rem;
+}
 .navbar {
     display: flex;
     align-items: center;
@@ -100,11 +110,6 @@ img {
         background-color 0.2s ease,
         border-color 0.2s ease;
     margin-top: 0.5rem;
-}
-
-.button:hover {
-    background: #1e3a8a;
-    color: #fff;
 }
 
 .button-secondary {

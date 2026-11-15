@@ -22,13 +22,15 @@
             @endif
         @endguest
 
-        @auth
-            <p>Hello, {{ auth()->user()->name }}</p>
-            <form method="POST" action="{{ route('logout') }}">
-                @csrf
-                <button>Log out</button>
-            </form>
-        @endauth
+        <div class="group">
+            @auth
+                <p>Hello, {{ auth()->user()->name }}</p>
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+                    <button id="button">Log out</button>
+                </form>
+            @endauth
+        </div>
 
     </header>
 

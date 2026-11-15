@@ -56,6 +56,14 @@ body {
     font-weight: bold;
 }
 
+#no-record {
+    grid-column: 1 / -1;
+    width: 100%;
+    max-width: none;
+    padding: 10rem;
+    text-align: center;
+}
+
 #logo {
     font-family: var(--font-accent);
     font-size: 1.5rem;

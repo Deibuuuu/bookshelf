@@ -14,24 +14,44 @@
                 autocomplete="email"
                 value="{{ old('email') }}"
             >
-            @error('email')
-                <p class="error">{{ $message }}</p>
-            @enderror
 
-            <label for="password">Password</label>
-            <input
-                type="password"
-                id="password"
-                name="password"
-                maxlength="255"
-                required
-                autocomplete="current-password"
-            >
-            @error('password')
-                <p class="error">{{ $message }}</p>
-            @enderror
+            <div class="form-group">
+                <label for="password">Password</label>
+                <div class="password-wrapper">
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        maxlength="255"
+                        required
+                        autocomplete="current-password"
+                    >
+                    <button
+                        type="button"
+                        id="togglePassword"
+                        class="password-toggle-btn"
+                        aria-label="Toggle password visibility"
+                        data-eye-open="{{ asset('images/icons/eye.svg') }}"
+                        data-eye-closed="{{ asset('images/icons/eye-closed.svg') }}"
+                    >
+                        <img
+                            id="eyeIcon"
+                            src="{{ asset('images/icons/eye-closed.svg') }}"
+                            alt="Show password"
+                            class="eye-icon"
+                            width="18"
+                            height="18"
+                        >
+                    </button>
+                </div>
+            </div>
 
             <button type="submit">Login</button>
+            @if ($errors->has('email') || $errors->has('password'))
+                <p class="error">{{ $errors->first('email') ?: $errors->first('password') }}</p>
+            @endif
         </form>
     </div>
+
+    <script src="{{ asset('js/app.js') }}"></script>
 @endsection

@@ -3,7 +3,8 @@
 @section('content')
     <h1>Edit Book</h1>
     <form class="form-panel" method="POST"
-        action="{{ route('books.update', $book) }}">
+        action="{{ route('books.update', $book) }}"
+        enctype="multipart/form-data">
         @csrf
         @method('PUT')
         <label>Book Title</label>
@@ -34,9 +35,9 @@
         @enderror
 
         <label>Book Cover</label>
-        <input type="text" name="cover"
+        <input type="file" name="cover" accept="image/jpeg,image/png,image/webp"
          maxlength="2048"
-        value="{{ $book->cover }}"><br>
+        ><br>
          @error('cover')
             <p class="error">{{$message}}</p>
         @enderror

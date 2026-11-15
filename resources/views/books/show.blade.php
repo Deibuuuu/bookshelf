@@ -1,9 +1,22 @@
 @extends('layouts.app')
 
 @section('content')
-    <span class="tag">{{ $book->genre }}</span>
-    <img src="{{ $book->cover }}">
-    <h2>{{$book->title}}</h2>
-    <p>by {{$book->author}}</p>
+    <div class="show-panel">
+        <span class="tag">{{ $book->genre }}</span>
+        <div class="show-image-container">
+            @if ($book->cover)
+                <img src="{{ str_starts_with($book->cover, 'http') 
+                    ? $book->cover 
+                    : Storage::url($book->cover) }}" 
+                    alt="{{ $book->title }}"
+                    class="show-image">
+            @else
+                <div class="card-image-placeholder show-placeholder">No Cover Available</div>
+            @endif
+        </div>
+       
+        <h2>{{ $book->title }}</h2>
+        <p>by {{ $book->author }}</p>
+    </div>
 @endsection
 

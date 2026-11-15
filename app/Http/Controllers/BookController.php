@@ -9,44 +9,44 @@ use Illuminate\Support\Facades\Storage;
 
 class BookController extends Controller
 {
-   public function index(Request $request)
-{
-    // Genre and publisher filter
-    $genres = Book::whereNotNull('genre')->distinct()->orderBy('genre')->pluck('genre');
-    $publishers = Publisher::orderBy('name')->get();
-    
+    public function index(Request $request)
+    {
+        // Genre and publisher filter
+        $genres = Book::whereNotNull('genre')->distinct()->orderBy('genre')->pluck('genre');
+        $publishers = Publisher::orderBy('name')->get();
 
-    $books = Book::with('publisher')
-        // Search by title or author
-        ->when($request->filled('search'), function ($query) use ($request) {
-            $search = $request->input('search');
-            $query->where(function ($q) use ($search) {
-                $q->where('title', 'like', "%{$search}%")
-                  ->orWhere('author', 'like', "%{$search}%");
-            });
-        })
-        // Filter by genre
-        ->when($request->filled('genre'), function ($query) use ($request) {
-            $query->where('genre', $request->input('genre'));
-        })
-        // Filter by publishing house
-        ->when($request->filled('publisher_id'), function ($query) use ($request) {
-            $query->where('publisher_id', $request->input('publisher_id'));
-        })
-        // Sort options
-        ->when($request->filled('sort'), function ($query) use ($request) {
-            match ($request->input('sort')) {
-                'title_asc'  => $query->orderBy('title', 'asc'),
-                'title_desc' => $query->orderBy('title', 'desc'),
-                default      => $query->orderBy('id', 'desc'),
-            };
-        }, function ($query) {
-            $query->orderBy('id', 'desc'); 
-        })
-        ->paginate(6)
-        ->withQueryString(); 
-    return view('books.index', compact('books', 'genres', 'publishers'));
-}
+        $books = Book::with('publisher')
+            // Search by title or author
+            ->when($request->filled('search'), function ($query) use ($request) {
+                $search = $request->input('search');
+                $query->where(function ($q) use ($search) {
+                    $q->where('title', 'like', "%{$search}%")
+                        ->orWhere('author', 'like', "%{$search}%");
+                });
+            })
+            // Filter by genre
+            ->when($request->filled('genre'), function ($query) use ($request) {
+                $query->where('genre', $request->input('genre'));
+            })
+            // Filter by publishing house
+            ->when($request->filled('publisher_id'), function ($query) use ($request) {
+                $query->where('publisher_id', $request->input('publisher_id'));
+            })
+            // Sort options
+            ->when($request->filled('sort'), function ($query) use ($request) {
+                match ($request->input('sort')) {
+                    'title_asc' => $query->orderBy('title', 'asc'),
+                    'title_desc' => $query->orderBy('title', 'desc'),
+                    default => $query->orderBy('id', 'desc'),
+                };
+            }, function ($query) {
+                $query->orderBy('id', 'desc');
+            })
+            ->paginate(6)
+            ->withQueryString();
+
+        return view('books.index', compact('books', 'genres', 'publishers'));
+    }
 
     public function show(Book $book)
     {
@@ -67,14 +67,14 @@ class BookController extends Controller
             'author' => ['required', 'string', 'max:100'],
             'genre' => ['required', 'string', 'max:50'],
             'cover' => ['nullable', 'image',
-            'mimes:jpeg,png,webp', 'max:2048'],
+                'mimes:jpeg,png,webp', 'max:2048'],
             'publisher_id' => ['nullable', 'exists:publishers,id'],
         ]);
-        
-        if($request->hasFile('cover')){
+
+        if ($request->hasFile('cover')) {
             $cover = $request->file('cover')
                 ->store('covers', 'public');
-            
+
         }
         $validated['cover'] = $cover;
         Book::create($validated);
@@ -100,11 +100,16 @@ class BookController extends Controller
             'cover' => ['nullable', 'image', 'mimes:jpeg,png,webp', 'max:2048'],
             'publisher_id' => ['nullable', 'exists:publishers,id'],
         ]);
+        if ($request->hasFile('cover')) {
 
-        if($request->hasFile('cover')){
-            $cover = $request->file('cover')
-                ->store('covers', 'public');
-            
+            if ($book->cover && Storage::disk('public')->exists($book->cover)) {
+                Storage::disk('public')->delete($book->cover);
+            }
+
+            $validated['cover'] = $request->file('cover')->store('covers', 'public');
+        } else {
+
+            unset($validated['cover']);
         }
         $book->update($validated);
 
@@ -113,7 +118,8 @@ class BookController extends Controller
             ->with('success', 'Book updated successfully!');
     }
 
-    public function destroy(Book $book) {
+    public function destroy(Book $book)
+    {
         Storage::disk('public')->delete($book->cover);
         $book->delete();
 

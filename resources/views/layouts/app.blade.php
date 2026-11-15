@@ -17,7 +17,9 @@
     <header class="site-header">
         <a href="{{ route('books.index') }}" id="logo">Bookshelf</a>
         @guest
-            <a href="{{ route('login') }}" id="button">Login</a>
+            @if (request()->routeIs('books.index'))
+             <a href="{{ route('login') }}" id="button">Login</a>
+            @endif
         @endguest
 
         @auth
@@ -27,6 +29,7 @@
                 <button>Log out</button>
             </form>
         @endauth
+
     </header>
 
     <main class="container">

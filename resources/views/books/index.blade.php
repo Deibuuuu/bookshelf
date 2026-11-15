@@ -162,7 +162,7 @@
                         @endauth
                     </article>
                 @empty
-                    <p>No records found.</p>
+                    <p id="no-record">No records found.</p>
                 @endforelse
                 </div>
         </section>

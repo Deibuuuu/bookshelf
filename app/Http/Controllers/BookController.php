@@ -72,11 +72,9 @@ class BookController extends Controller
         ]);
 
         if ($request->hasFile('cover')) {
-            $cover = $request->file('cover')
-                ->store('covers', 'public');
-
+            $validated['cover'] = $request->file('cover')->store('covers', 'public');
         }
-        $validated['cover'] = $cover;
+
         Book::create($validated);
 
         return redirect()
@@ -120,7 +118,9 @@ class BookController extends Controller
 
     public function destroy(Book $book)
     {
-        Storage::disk('public')->delete($book->cover);
+        if ($book->cover && Storage::disk('public')->exists($book->cover)) {
+            Storage::disk('public')->delete($book->cover);
+        }
         $book->delete();
 
         return redirect()

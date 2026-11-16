@@ -117,15 +117,15 @@ img {
 }
 
 .button-secondary {
-    background: #fff;
-    color: #1e40af;
+    background: #ffff;
+    color: var(--color-accent);
     border-color: #cbd5e1;
 }
 
 .button-secondary:hover {
     background: #f8fafc;
-    border-color: #1e40af;
-    color: #1e3a8a;
+    border-color: var(--color-primary-shade);
+    color: var(--color-primary-shade);
 }
 
 .button-accent,

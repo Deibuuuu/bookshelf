@@ -179,6 +179,17 @@
     transform: translateY(0);
 }
 
+.form-panel .card-actions-container .button,
+.form-panel .card-actions-container button {
+    width: auto;
+    height: 2.75rem;
+    padding: 0 1.25rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+    border-radius: 0.5rem;
+    margin: 0;
+}
+
 .form-panel .error,
 .login-card .error {
     color: #dc2626;

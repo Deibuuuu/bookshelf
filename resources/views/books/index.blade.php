@@ -69,10 +69,10 @@
                             </div>
                         </div>
 
-                        <div class="filter-field">
+                        <div id="publisher" class="filter-field">
                             <label for="publisher-select">Publishing House</label>
                             <div class="select-wrapper">
-                                <select id="publisher-select" name="publisher_id" class="filter-control">
+                                <select name="publisher_id" class="filter-control">
                                     <option value="">All Publishers</option>
                                     @foreach ($publishers as $publisher)
                                         <option value="{{ $publisher->id }}" @selected(request('publisher_id') == $publisher->id)>
@@ -149,7 +149,7 @@
                             <a href="{{ route('books.show', $book) }}">{{ $book->title }}</a>
                         </h2>
                         <p class="card-author">by {{ $book->author }}</p>
-                        <p>Published by: {{ $book->publisher->name ?? 'Unknown' }}</p>
+                        <p id="publisher">Published by: {{ $book->publisher->name ?? 'Unknown' }}</p>
                         @auth
                             <div class="card-actions-container">
                                 <a class="button button-secondary" href="{{ route('books.edit', $book) }}">Edit Book</a>

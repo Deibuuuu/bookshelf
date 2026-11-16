@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+    <a class="button button-accent" href="{{ route('books.index') }}">Go back</a>
     <div class="show-panel">
         <span class="tag">{{ $book->genre }}</span>
         <div class="show-image-container">

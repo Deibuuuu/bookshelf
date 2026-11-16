@@ -55,8 +55,10 @@
         @error('publisher_id')
             <p class="error">{{ $message }}</p>
         @enderror
-
-        <button>Update Book</button>
+        <div class="card-actions-container">
+            <a class="button button-secondary" href="{{ route('books.index') }}">Cancel</a>
+            <button class="button button-danger">Update Book</button>
+        </div>
 
     </form>
 @endsection

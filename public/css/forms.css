@@ -520,25 +520,3 @@
     outline: none;
     opacity: 1;
 }
-/* Responsive */
-@media (max-width: 768px) {
-    .filter-grid {
-        grid-template-columns: 1fr 1fr;
-    }
-    .filter-actions {
-        grid-column: span 2;
-    }
-}
-
-@media (max-width: 500px) {
-    .filter-grid {
-        grid-template-columns: 1fr;
-    }
-    .filter-actions {
-        grid-column: span 1;
-        width: 100%;
-    }
-    .filter-actions .button {
-        flex: 1;
-    }
-}

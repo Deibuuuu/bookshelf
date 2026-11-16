@@ -131,32 +131,3 @@
     box-shadow: none;
     opacity: 0.75;
 }
-
-@media (max-width: 640px) {
-    .pagination-container {
-        width: 100%;
-        padding: 0.35rem 0.5rem;
-        gap: 0.4rem;
-        border-radius: 1rem;
-    }
-
-    .pagination-info-wrapper {
-        flex-direction: column;
-        gap: 0.15rem;
-    }
-
-    .pagination-page-badge {
-        font-size: 0.75rem;
-        padding: 0.15rem 0.5rem;
-    }
-
-    .pagination-counter {
-        font-size: 0.75rem;
-    }
-
-    .pagination-btn {
-        padding: 0.45rem 0.8rem;
-        font-size: 0.8rem;
-        gap: 0.25rem;
-    }
-}
